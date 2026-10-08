@@ -1,0 +1,32 @@
+{
+  "productNames": [
+    "Netted Tissue Fabric",
+    "Semi silk fabric",
+    "Tissue fabric"
+  ],
+  "categories": [
+    "Bridal",
+    "Semi Bridal",
+    "Casual"
+  ],
+  "craftWorks": [
+    "Gold Zari (Hand work)",
+    "Silver Zari (Hand work)",
+    "Beadwork (Hand work)",
+    "Embroidary (Machine)"
+  ],
+  "descriptions": {
+    "Netted Tissue Fabric": {
+      "short": "Exquisite Netted Tissue Fabric featuring shimmering sheer texture and elegant metallic weave.",
+      "full": "Premium unstitched Netted Tissue Fabric (1.0m to 1.2m cut). High-grade lightweight netted sheer texture with rich borders, offering effortless drape and luxurious bridal appeal."
+    },
+    "Semi silk fabric": {
+      "short": "Lustrous Semi Silk Fabric with soft texture, traditional luster, and rich zari finish.",
+      "full": "Fine unstitched Semi Silk Fabric (1.0m to 1.2m cut). Offers the rich shine of pure silk with enhanced durability and smooth comfort for grand celebrations."
+    },
+    "Tissue fabric": {
+      "short": "Ultra-rich metallic Tissue Fabric with glowing sheen and delicate artisan weaving.",
+      "full": "Exclusive unstitched Tissue Fabric material (1.0m to 1.2m cut). Signature golden/silver metallic sheen suitable for heavy designer blouse patterns."
+    }
+  }
+}

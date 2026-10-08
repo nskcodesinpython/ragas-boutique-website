@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <filter id="a" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity=".15"/>
+    </filter>
+  </defs>
+  <path fill="#fdfbf7" d="M0 0h400v400H0z"/>
+  <path d="M190 160c5-10 20-5 15 10Z" fill="#7a0a2e"/>
+  <path d="M140 60h80c40 0 60 25 60 55s-25 50-60 50c25 5 45 45 95 80-15 6-29-1-41-13-24-22-42-47-64-57h-30v70h15v5h-60v-5h15V70h-15V60Zm40 15v80h35c25 0 35-20 35-40s-10-40-35-40Z" fill="#161817" fill-rule="evenodd"/>
+  <g filter="url(#a)">
+    <path d="M190 160c-40 5-90 40-105 100 10 10 35 10 50 0 20 5 45 0 60-10 10-40 0-80-5-90" fill="#a81242"/>
+    <path d="M190 160c-50 5-85 40-90 102 10 6 30 3 40-7 10-45 30-80 50-95" fill="#d11f5a"/>
+    <path d="M190 160c-30 10-55 50-55 100 10 5 25 0 35-10 10-35 20-65 20-90" fill="#e63771"/>
+  </g>
+  <path d="M87 254q23 10 45 0" stroke="#d4a849" stroke-width="3" fill="none"/>
+  <path d="M102 256q18 8 36-6m0 4q17 6 30-8" stroke="#d4a849" stroke-width="3" fill="none"/>
+  <path d="M100 262c5-62 40-97 90-102" stroke="#d4a849" stroke-width="1.5" fill="none"/>
+  <path d="M135 260c0-50 25-90 55-100" stroke="#d4a849" stroke-width="1.5" fill="none"/>
+  <g transform="translate(10 12)">
+    <path d="M265 110q10 22 5 35" stroke="#d11f5a" stroke-width="1.5" fill="none"/>
+    <path d="M265 110q20 15 25 35" stroke="#d4a849" fill="none"/>
+    <circle cx="290" cy="145" r="1.5" fill="#d11f5a"/>
+    <path d="M265 110q-10 15-15 30" stroke="#d4a849" fill="none"/>
+    <circle cx="250" cy="140" r="1.5" fill="#d11f5a"/>
+    <circle cx="270" cy="145" r="3.5" fill="#d4a849"/>
+    <path d="M260 150q10-11.5 20 0l3 15c0 5-26 5-26 0Z" fill="#d4a849"/>
+    <path d="M258 155q12 3 24 0m-25 6q13 3 26 0" stroke="#b38827" fill="none"/>
+    <path d="m259 168 2 5h-4Zm5 1 2 6h-4Zm5 1 2 6h-4Zm5-1 2 6h-4Zm5-1 2 5h-4Z" fill="#d4a849"/>
+  </g>
+  <text x="210" y="325" font-family="'Didot', 'Bodoni MT', 'Times New Roman', serif" font-size="46" fill="#161817" text-anchor="middle" letter-spacing="6">RAGAS</text>
+  <text x="215" y="350" font-family="'Montserrat', 'Helvetica Neue', 'Arial', sans-serif" font-size="14" fill="#161817" text-anchor="middle" letter-spacing="12">BOUTIQUE</text>
+</svg>
