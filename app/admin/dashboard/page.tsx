@@ -966,7 +966,7 @@ export default function AdminDashboardPage() {
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">1. Front Neck Fabric</span>
                       <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
                         <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{frontFileName || (frontImageUrl ? 'Front Image Loaded' : 'Select front.png')}</span>
+                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{frontFileName || (frontImageUrl ? 'Front Image Loaded' : 'Select front-fabric.png')}</span>
                         <input type="file" accept="image/*" onChange={handleFrontImageUpload} className="hidden" />
                       </label>
                     </div>
@@ -976,7 +976,7 @@ export default function AdminDashboardPage() {
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">2. Back Neck Fabric</span>
                       <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
                         <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{backFileName || (backImageUrl ? 'Back Image Loaded' : 'Select Back.png')}</span>
+                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{backFileName || (backImageUrl ? 'Back Image Loaded' : 'Select back-fabric.png')}</span>
                         <input type="file" accept="image/*" onChange={handleBackImageUpload} className="hidden" />
                       </label>
                     </div>
@@ -986,7 +986,7 @@ export default function AdminDashboardPage() {
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">3. Sleeve/Hand Fabric</span>
                       <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
                         <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{handFileName || (handImageUrl ? 'Hand Image Loaded' : 'Select Hand.png')}</span>
+                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{handFileName || (handImageUrl ? 'Hand Image Loaded' : 'Select sleeve-fabric.png')}</span>
                         <input type="file" accept="image/*" onChange={handleHandImageUpload} className="hidden" />
                       </label>
                     </div>

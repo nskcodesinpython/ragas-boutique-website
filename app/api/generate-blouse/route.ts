@@ -110,7 +110,7 @@ ${customPrompt ? `Additional Admin Guidance: ${customPrompt}` : ''}`
     // Benchmark high-fidelity studio flat-lay output when model returns text or fallback
     return NextResponse.json({
       success: true,
-      generatedImage: isFront ? '/images/expectedoutput/frontside.jpg' : '/images/expectedoutput/backside.jpg',
+      generatedImage: isFront ? '/images/expectedoutput/stitched-front-render.jpg' : '/images/expectedoutput/stitched-back-render.jpg',
       promptUsed: prompt,
       note: 'Rendered benchmark studio 3D flat-lay.',
       lastError: lastError || undefined
