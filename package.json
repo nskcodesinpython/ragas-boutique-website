@@ -12,6 +12,7 @@
     "@google/genai": "^2.27.0",
     "@supabase/supabase-js": "^2.117.3",
     "@types/bcryptjs": "^2.4.6",
+    "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "color-diff": "^1.4.0",

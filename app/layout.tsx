@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { FloatingWhatsAppButton } from '@/components/common/FloatingWhatsAppButton'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'Ragas Boutique | Handcrafted Designer Blouses & Custom Embroidery',
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <FloatingWhatsAppButton />
+        <Analytics />
       </body>
     </html>
   )
