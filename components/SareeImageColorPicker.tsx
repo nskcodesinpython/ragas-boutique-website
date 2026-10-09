@@ -145,13 +145,19 @@ export function SareeImageColorPicker({ onSelectColor, onClose }: SareeImageColo
       {!imageSrc ? (
         /* Image Upload Box */
         <label className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-primary/30 rounded-2xl bg-[#FAF8F5] cursor-pointer hover:bg-primary/5 transition-all text-center space-y-3">
-          <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+          <input 
+            type="file" 
+            accept="image/*" 
+            capture="environment" 
+            onChange={handleFileUpload} 
+            className="hidden" 
+          />
           <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-200 flex items-center justify-center text-primary">
-            <Upload className="w-7 h-7" />
+            <Camera className="w-7 h-7" />
           </div>
           <div>
-            <span className="font-heading font-bold text-gray-900 text-sm block">Click or Tap to Upload Saree Image</span>
-            <span className="text-xs text-gray-500">Supports JPG, PNG, WEBP photos from Mobile Camera or Gallery</span>
+            <span className="font-heading font-bold text-gray-900 text-sm block">Take Photo with Camera or Pick Saree Image</span>
+            <span className="text-xs text-gray-500">Supports direct camera photo or gallery selection</span>
           </div>
         </label>
       ) : (

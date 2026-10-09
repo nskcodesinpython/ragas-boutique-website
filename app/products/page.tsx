@@ -192,50 +192,80 @@ export default function ProductsPage() {
     return getCleanImageUrl(product.images[0])
   }
 
+  // Mobile Filter Drawer Open State
+  const [showMobileFilters, setShowMobileFilters] = useState<boolean>(false)
+
+  // Count active filters for badge counter
+  const activeFilterCount = useMemo(() => {
+    let count = 0
+    if (selectedCategory !== 'all') count++
+    if (selectedFabric !== 'all') count++
+    if (selectedPriceRange !== 'all') count++
+    if (selectedTag !== 'all') count++
+    if (enableColorMatching) count++
+    return count
+  }, [selectedCategory, selectedFabric, selectedPriceRange, selectedTag, enableColorMatching])
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
 
-      <main className="flex-grow py-10 md:py-16">
+      <main className="flex-grow py-6 md:py-16">
         <div className="container-custom">
           
           {/* Title & View Toggle Area */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="font-heading text-3xl md:text-5xl font-extrabold text-gray-900 mb-2">
+              <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-900 mb-1 sm:mb-2">
                 Designer Blouse Fabrics Catalog
               </h1>
-              <p className="text-gray-600 text-sm md:text-base">
+              <p className="text-gray-600 text-xs sm:text-sm md:text-base">
                 Explore unstitched Kanjeevaram silk, Banarasi brocade, Organza tissue, and Zardozi materials (₹400 – ₹4,000).
               </p>
             </div>
 
-            {/* Layout Toggle Buttons */}
-            <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-xl border border-gray-200 self-end md:self-auto">
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              {/* Mobile Filter Drawer Button */}
               <button
-                onClick={() => setViewMode('grid')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  viewMode === 'grid'
-                    ? 'bg-white text-primary shadow-sm font-bold'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                title="Grid View"
+                onClick={() => setShowMobileFilters(true)}
+                className="lg:hidden flex items-center gap-2 px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl shadow-md hover:bg-primary-dark transition-all cursor-pointer"
               >
-                <LayoutGrid className="w-4 h-4" />
-                <span className="hidden sm:inline">Grid View</span>
+                <Filter className="w-4 h-4" />
+                <span>Filter Catalog</span>
+                {activeFilterCount > 0 && (
+                  <span className="w-5 h-5 bg-white text-primary text-[10px] rounded-full flex items-center justify-center font-extrabold">
+                    {activeFilterCount}
+                  </span>
+                )}
               </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  viewMode === 'list'
-                    ? 'bg-white text-primary shadow-sm font-bold'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                title="Detailed Catalog List View"
-              >
-                <List className="w-4 h-4" />
-                <span className="hidden sm:inline">Detailed View</span>
-              </button>
+
+              {/* Layout Toggle Buttons */}
+              <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-xl border border-gray-200">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-primary shadow-sm font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                  title="Grid View"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                  <span className="hidden sm:inline">Grid View</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    viewMode === 'list'
+                      ? 'bg-white text-primary shadow-sm font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                  title="Detailed Catalog List View"
+                >
+                  <List className="w-4 h-4" />
+                  <span className="hidden sm:inline">Detailed View</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -456,6 +486,155 @@ export default function ProductsPage() {
                 </div>
               </div>
             </aside>
+
+            {/* Mobile Filter Drawer Slide-over Modal */}
+            {showMobileFilters && (
+              <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-white">
+                {/* Drawer Header */}
+                <div className="p-4 border-b border-gray-200 flex items-center justify-between bg-[#FAF8F5]">
+                  <div className="flex items-center gap-2">
+                    <Filter className="w-5 h-5 text-primary" />
+                    <h3 className="font-heading text-lg font-bold text-gray-900">Filter Catalog</h3>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {activeFilterCount > 0 && (
+                      <button
+                        onClick={clearFilters}
+                        className="text-xs text-primary font-bold hover:underline"
+                      >
+                        Reset All
+                      </button>
+                    )}
+                    <button
+                      onClick={() => setShowMobileFilters(false)}
+                      className="p-2 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-200/60"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Drawer Scrollable Content */}
+                <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                  
+                  {/* Special Collections / Badges Filter */}
+                  <div>
+                    <h4 className="text-xs font-accent font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                      Special Collections
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2">
+                      <button
+                        onClick={() => { setSelectedTag('all'); setShowMobileFilters(false); }}
+                        className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-colors ${
+                          selectedTag === 'all'
+                            ? 'bg-primary text-white font-semibold shadow-sm'
+                            : 'text-gray-700 bg-gray-50 border border-gray-200'
+                        }`}
+                      >
+                        All Collections
+                      </button>
+                      <button
+                        onClick={() => { setSelectedTag(prev => prev === 'bestseller' ? 'all' : 'bestseller'); setShowMobileFilters(false); }}
+                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-colors flex items-center gap-2 ${
+                          selectedTag === 'bestseller'
+                            ? 'bg-amber-600 text-white shadow-sm'
+                            : 'text-amber-800 bg-amber-50 border border-amber-200'
+                        }`}
+                      >
+                        <span>🔥 Bestseller Fabrics</span>
+                      </button>
+                      <button
+                        onClick={() => { setSelectedTag(prev => prev === 'new' ? 'all' : 'new'); setShowMobileFilters(false); }}
+                        className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-colors flex items-center gap-2 ${
+                          selectedTag === 'new'
+                            ? 'bg-emerald-600 text-white shadow-sm'
+                            : 'text-emerald-800 bg-emerald-50 border border-emerald-200'
+                        }`}
+                      >
+                        <span>✨ New Arrivals</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Price Category Filter */}
+                  <div>
+                    <h4 className="text-xs font-accent font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                      Price Category (₹400 – ₹4,000)
+                    </h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {priceRanges.map(pr => (
+                        <button
+                          key={pr.value}
+                          onClick={() => { setSelectedPriceRange(pr.value); setShowMobileFilters(false); }}
+                          className={`text-left px-3 py-2.5 rounded-xl text-xs transition-colors flex items-center justify-between ${
+                            selectedPriceRange === pr.value
+                              ? 'bg-primary text-white font-bold shadow-sm'
+                              : 'text-gray-700 bg-gray-50 border border-gray-200 font-medium'
+                          }`}
+                        >
+                          <span>{pr.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Fabric Material Type */}
+                  <div>
+                    <h4 className="text-xs font-accent font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                      Fabric Material Type
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2">
+                      {fabrics.map(fab => (
+                        <button
+                          key={fab}
+                          onClick={() => { setSelectedFabric(fab); setShowMobileFilters(false); }}
+                          className={`w-full text-left px-4 py-3 rounded-xl text-sm capitalize transition-colors ${
+                            selectedFabric === fab
+                              ? 'bg-primary text-white font-semibold shadow-sm'
+                              : 'text-gray-700 bg-gray-50 border border-gray-200'
+                          }`}
+                        >
+                          {fab === 'all' ? 'All Fabric Types' : fab}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Saree Style Category */}
+                  <div>
+                    <h4 className="text-xs font-accent font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                      Saree Style Category
+                    </h4>
+                    <div className="grid grid-cols-1 gap-2">
+                      {categories.map(cat => (
+                        <button
+                          key={cat}
+                          onClick={() => { setSelectedCategory(cat); setShowMobileFilters(false); }}
+                          className={`w-full text-left px-4 py-3 rounded-xl text-sm capitalize transition-colors ${
+                            selectedCategory === cat
+                              ? 'bg-primary text-white font-semibold shadow-sm'
+                              : 'text-gray-700 bg-gray-50 border border-gray-200'
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Drawer Footer Action */}
+                <div className="p-4 border-t border-gray-200 bg-white">
+                  <button
+                    onClick={() => setShowMobileFilters(false)}
+                    className="w-full py-3.5 bg-primary text-white font-bold rounded-2xl text-center text-sm shadow-md"
+                  >
+                    Apply Filters ({filteredAndSortedProducts.length} items)
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Product Display Area */}
             <div className="lg:col-span-9">

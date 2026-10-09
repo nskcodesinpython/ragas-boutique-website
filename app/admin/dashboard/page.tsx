@@ -296,101 +296,116 @@ export default function AdminDashboardPage() {
     router.push('/admin/login')
   }
 
-  const handleFrontImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Helper to compress high-resolution phone photos before Base64 encoding
+  const compressImageFile = (file: File, maxWidth = 1200, maxHeight = 1200, quality = 0.8): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const img = new Image()
+        img.onload = () => {
+          let width = img.width
+          let height = img.height
+
+          if (width > maxWidth || height > maxHeight) {
+            if (width > height) {
+              height = Math.round((height * maxWidth) / width)
+              width = maxWidth
+            } else {
+              width = Math.round((width * maxHeight) / height)
+              height = maxHeight
+            }
+          }
+
+          const canvas = document.createElement('canvas')
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height)
+            resolve(canvas.toDataURL('image/jpeg', quality))
+          } else {
+            resolve(event.target?.result as string)
+          }
+        }
+        img.onerror = () => {
+          resolve(event.target?.result as string)
+        }
+        img.src = event.target?.result as string
+      }
+      reader.readAsDataURL(file)
+    })
+  }
+
+  const handleFrontImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setFrontFileName(file.name)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') setFrontImageUrl(reader.result)
-      }
-      reader.readAsDataURL(file)
+      const compressedUrl = await compressImageFile(file)
+      setFrontImageUrl(compressedUrl)
     }
   }
 
-  const handleBackImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setBackFileName(file.name)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') setBackImageUrl(reader.result)
-      }
-      reader.readAsDataURL(file)
+      const compressedUrl = await compressImageFile(file)
+      setBackImageUrl(compressedUrl)
     }
   }
 
-  const handleHandImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHandImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setHandFileName(file.name)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') setHandImageUrl(reader.result)
-      }
-      reader.readAsDataURL(file)
+      const compressedUrl = await compressImageFile(file)
+      setHandImageUrl(compressedUrl)
     }
   }
 
-  const handleRenderedFrontUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRenderedFrontUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setRenderedFrontFileName(file.name)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') setRenderedFrontUrl(reader.result)
-      }
-      reader.readAsDataURL(file)
+      const compressedUrl = await compressImageFile(file)
+      setRenderedFrontUrl(compressedUrl)
     }
   }
 
-  const handleRenderedBackUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRenderedBackUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setRenderedBackFileName(file.name)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') setRenderedBackUrl(reader.result)
-      }
-      reader.readAsDataURL(file)
+      const compressedUrl = await compressImageFile(file)
+      setRenderedBackUrl(compressedUrl)
     }
   }
 
   // Per-Product Upload Handlers for Super Admin
-  const handleProductRenderFrontUpload = (productId: string, file?: File) => {
+  const handleProductRenderFrontUpload = async (productId: string, file?: File) => {
     if (!file) return
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setProductRenders(prev => ({
-          ...prev,
-          [productId]: {
-            ...prev[productId],
-            frontUrl: reader.result as string,
-            frontName: file.name
-          }
-        }))
+    const compressedUrl = await compressImageFile(file)
+    setProductRenders(prev => ({
+      ...prev,
+      [productId]: {
+        ...prev[productId],
+        frontUrl: compressedUrl,
+        frontName: file.name
       }
-    }
-    reader.readAsDataURL(file)
+    }))
   }
 
-  const handleProductRenderBackUpload = (productId: string, file?: File) => {
+  const handleProductRenderBackUpload = async (productId: string, file?: File) => {
     if (!file) return
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setProductRenders(prev => ({
-          ...prev,
-          [productId]: {
-            ...prev[productId],
-            backUrl: reader.result as string,
-            backName: file.name
-          }
-        }))
+    const compressedUrl = await compressImageFile(file)
+    setProductRenders(prev => ({
+      ...prev,
+      [productId]: {
+        ...prev[productId],
+        backUrl: compressedUrl,
+        backName: file.name
       }
-    }
-    reader.readAsDataURL(file)
+    }))
   }
 
   const handleAddOrUpdateProduct = async (e: React.FormEvent) => {
