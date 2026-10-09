@@ -220,7 +220,7 @@ export default function ProductsPage() {
                 Designer Blouse Fabrics Catalog
               </h1>
               <p className="text-gray-600 text-xs sm:text-sm md:text-base">
-                Explore unstitched Kanjeevaram silk, Banarasi brocade, Organza tissue, and Zardozi materials (₹400 – ₹4,000).
+                Explore unstitched Netted Tissue Fabric, Semi Silk Fabric, and Tissue Fabric materials (₹400 – ₹4,000).
               </p>
             </div>
 

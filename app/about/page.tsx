@@ -73,7 +73,7 @@ export default function AboutPage() {
                 Find the Perfect Fabric for Your Saree
               </h2>
               <p className="text-gray-400 text-base">
-                Whether you need a heavy bridal velvet Zardozi cut, Banarasi brocade material, or crisp Kanjeevaram silk fabric, explore our catalog today.
+                Whether you need a lustrous Semi Silk fabric cut piece, lightweight Netted Tissue material, or rich Tissue fabric, explore our catalog today.
               </p>
             </div>
 

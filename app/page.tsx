@@ -46,7 +46,7 @@ export default function HomePage() {
                 </h1>
 
                 <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                  Discover premium unstitched Kanjeevaram silk, Banarasi brocade, Organza tissue, and heavy Zardozi embroidered fabrics. Perfectly cut and matched for your grand celebrations.
+                  Discover premium unstitched blouse fabric materials at <strong>RAGAS BOUTIQUE</strong>. We offer high-quality <strong>Netted Tissue Fabric</strong>, <strong>Semi Silk Fabric</strong>, and <strong>Tissue Fabric</strong> cut pieces — ready for your custom tailoring.
                 </p>
 
                 {/* Price Range Banner */}
@@ -54,7 +54,7 @@ export default function HomePage() {
                   <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="font-medium text-gray-600">Price Range:</span>
                   <span className="text-primary font-accent text-xl md:text-2xl font-extrabold tracking-tight">₹400 – ₹4,000</span>
-                  <span className="text-xs text-gray-400 font-normal uppercase tracking-wider pl-3 border-l border-gray-200 hidden sm:inline">Budget to Luxury Bridal</span>
+                  <span className="text-xs text-gray-400 font-normal uppercase tracking-wider pl-3 border-l border-gray-200 hidden sm:inline font-bold">Same Day Dispatch</span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
@@ -76,42 +76,56 @@ export default function HomePage() {
                 <div className="grid grid-cols-3 gap-4 pt-8 border-t border-gray-200/80 text-center lg:text-left text-xs text-gray-500">
                   <div>
                     <span className="block font-bold text-gray-900 text-lg md:text-xl font-accent text-primary">₹400 – ₹4,000</span>
-                    Price Range
+                    Affordable Pricing
                   </div>
                   <div>
-                    <span className="block font-bold text-gray-900 text-base md:text-lg">1.0m+</span>
-                    Fabric Cut
+                    <span className="block font-bold text-gray-900 text-base md:text-lg">1.0m – 1.2m</span>
+                    Unstitched Cut
                   </div>
                   <div>
-                    <span className="block font-bold text-gray-900 text-base md:text-lg">100% Pure</span>
-                    Hand Work &amp; Silk
+                    <span className="block font-bold text-gray-900 text-base md:text-lg">⚡ Express</span>
+                    Same Day Dispatch
                   </div>
                 </div>
               </div>
 
+              {/* RAGAS BOUTIQUE Official Brand Emblem Showcase */}
               <div className="lg:col-span-5 relative flex justify-center">
-                <div className="relative aspect-[4/5] w-full max-w-md bg-white rounded-3xl p-6 shadow-xl border border-gray-100 flex flex-col justify-between">
-                  <div className="absolute -top-4 -right-4 bg-primary text-white text-[11px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md">
-                    Hand Work
+                <div className="relative aspect-[4/5] w-full max-w-md bg-white rounded-3xl p-8 shadow-xl border border-gray-200 flex flex-col justify-between items-center text-center">
+                  
+                  <div className="w-full flex items-center justify-between pb-4 border-b border-gray-100">
+                    <span className="text-[10px] uppercase tracking-widest text-primary font-bold bg-primary/10 px-3 py-1 rounded-full">Official Store</span>
+                    <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      In Stock
+                    </span>
                   </div>
 
-                  <div className="aspect-square bg-[#FAF8F5] rounded-2xl flex items-center justify-center p-6 mb-4 border border-gray-100">
-                    <svg
-                      className="w-32 h-32 drop-shadow-md text-primary"
-                      viewBox="0 0 24 24"
-                      fill="#C4204F"
-                      stroke="#FFFFFF"
-                      strokeWidth="0.8"
-                    >
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                    </svg>
+                  {/* Boutique Brand Logo Display */}
+                  <div className="w-full my-6 flex flex-col items-center justify-center p-6 bg-[#FAF8F5] rounded-2xl border border-gray-100 space-y-4">
+                    <div className="relative w-44 h-28">
+                      <Image 
+                        src="/images/logo.svg" 
+                        alt="Ragas Boutique Logo" 
+                        fill 
+                        className="object-contain"
+                        priority
+                        unoptimized
+                      />
+                    </div>
+                    <div className="w-12 h-0.5 bg-primary/30 rounded-full" />
+                    <p className="text-xs text-gray-600 font-medium">Washermenpet, Chennai - 600021</p>
                   </div>
 
-                  <div>
-                    <span className="text-xs uppercase tracking-wider text-primary font-bold">Featured Signature Cut</span>
-                    <h3 className="font-heading text-xl font-extrabold text-gray-900">Bridal Crimson Pink Tissue</h3>
-                    <p className="text-xs text-gray-500 mt-1">1.2 Meters Unstitched • Gold Zari &amp; Beadwork</p>
+                  <div className="w-full space-y-2 pt-2 border-t border-gray-100">
+                    <h3 className="font-heading text-lg font-extrabold text-gray-900">RAGAS BOUTIQUE CHENNAI</h3>
+                    <p className="text-xs text-gray-500">Unstitched Blouse Fabrics • Netted Tissue, Semi Silk &amp; Pure Tissue Cuts</p>
+                    <div className="pt-2 flex items-center justify-center gap-2">
+                      <span className="text-[11px] font-bold text-primary bg-primary/5 px-2.5 py-1 rounded-lg border border-primary/20">₹400 – ₹4,000 Range</span>
+                      <span className="text-[11px] font-bold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">1.0m+ Unstitched</span>
+                    </div>
                   </div>
+
                 </div>
               </div>
 
@@ -284,7 +298,7 @@ export default function HomePage() {
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <h3 className="font-heading text-lg font-bold text-gray-900 mb-2">Guaranteed Quality</h3>
-                <p className="text-sm text-gray-600">Handpicked premium Kanjeevaram &amp; Banarasi fabrics directly from trusted weavers.</p>
+                <p className="text-sm text-gray-600">Handpicked Netted Tissue, Semi Silk &amp; Tissue fabrics carefully curated for boutique quality.</p>
               </div>
 
               <div className="p-6 rounded-xl bg-gray-50">
