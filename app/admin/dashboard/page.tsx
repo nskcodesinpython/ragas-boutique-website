@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Plus, Trash2, LogOut, Package, Palette, Upload, Image as ImageIcon, Download, ShieldCheck, Sparkles, Edit3, X, Check, Settings } from 'lucide-react'
+import { Plus, Trash2, LogOut, Package, Palette, Upload, Image as ImageIcon, Download, ShieldCheck, Sparkles, Edit3, X, Check, Settings, Camera } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Product } from '@/types'
@@ -964,31 +964,52 @@ export default function AdminDashboardPage() {
                     {/* Front Fabric Image Input */}
                     <div>
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">1. Front Neck Fabric</span>
-                      <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
-                        <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{frontFileName || (frontImageUrl ? 'Front Image Loaded' : 'Select front-fabric.png')}</span>
-                        <input type="file" accept="image/*" onChange={handleFrontImageUpload} className="hidden" />
-                      </label>
+                      <div className="flex items-center gap-1.5">
+                        <label className="flex-1 flex flex-col items-center justify-center p-2.5 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
+                          <Upload className="w-4 h-4 text-primary mb-1" />
+                          <span className="text-[10px] font-medium text-gray-700 truncate w-full">{frontFileName || (frontImageUrl ? 'Front Image Loaded' : 'Gallery / File')}</span>
+                          <input type="file" accept="image/*" onChange={handleFrontImageUpload} className="hidden" />
+                        </label>
+                        <label className="flex flex-col items-center justify-center p-2.5 bg-primary/10 border border-primary/20 rounded-xl cursor-pointer hover:bg-primary/20 transition-colors text-center text-primary" title="Take Photo with Camera">
+                          <Camera className="w-4 h-4 mb-1" />
+                          <span className="text-[10px] font-bold">Camera</span>
+                          <input type="file" accept="image/*" capture="environment" onChange={handleFrontImageUpload} className="hidden" />
+                        </label>
+                      </div>
                     </div>
 
                     {/* Back Fabric Image Input */}
                     <div>
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">2. Back Neck Fabric</span>
-                      <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
-                        <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{backFileName || (backImageUrl ? 'Back Image Loaded' : 'Select back-fabric.png')}</span>
-                        <input type="file" accept="image/*" onChange={handleBackImageUpload} className="hidden" />
-                      </label>
+                      <div className="flex items-center gap-1.5">
+                        <label className="flex-1 flex flex-col items-center justify-center p-2.5 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
+                          <Upload className="w-4 h-4 text-primary mb-1" />
+                          <span className="text-[10px] font-medium text-gray-700 truncate w-full">{backFileName || (backImageUrl ? 'Back Image Loaded' : 'Gallery / File')}</span>
+                          <input type="file" accept="image/*" onChange={handleBackImageUpload} className="hidden" />
+                        </label>
+                        <label className="flex flex-col items-center justify-center p-2.5 bg-primary/10 border border-primary/20 rounded-xl cursor-pointer hover:bg-primary/20 transition-colors text-center text-primary" title="Take Photo with Camera">
+                          <Camera className="w-4 h-4 mb-1" />
+                          <span className="text-[10px] font-bold">Camera</span>
+                          <input type="file" accept="image/*" capture="environment" onChange={handleBackImageUpload} className="hidden" />
+                        </label>
+                      </div>
                     </div>
 
                     {/* Sleeve/Hand Fabric Image Input */}
                     <div>
                       <span className="block text-[11px] font-semibold text-gray-600 mb-1">3. Sleeve/Hand Fabric</span>
-                      <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
-                        <Upload className="w-4 h-4 text-primary mb-1" />
-                        <span className="text-[10px] font-medium text-gray-700 truncate w-full">{handFileName || (handImageUrl ? 'Hand Image Loaded' : 'Select sleeve-fabric.png')}</span>
-                        <input type="file" accept="image/*" onChange={handleHandImageUpload} className="hidden" />
-                      </label>
+                      <div className="flex items-center gap-1.5">
+                        <label className="flex-1 flex flex-col items-center justify-center p-2.5 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors text-center">
+                          <Upload className="w-4 h-4 text-primary mb-1" />
+                          <span className="text-[10px] font-medium text-gray-700 truncate w-full">{handFileName || (handImageUrl ? 'Hand Image Loaded' : 'Gallery / File')}</span>
+                          <input type="file" accept="image/*" onChange={handleHandImageUpload} className="hidden" />
+                        </label>
+                        <label className="flex flex-col items-center justify-center p-2.5 bg-primary/10 border border-primary/20 rounded-xl cursor-pointer hover:bg-primary/20 transition-colors text-center text-primary" title="Take Photo with Camera">
+                          <Camera className="w-4 h-4 mb-1" />
+                          <span className="text-[10px] font-bold">Camera</span>
+                          <input type="file" accept="image/*" capture="environment" onChange={handleHandImageUpload} className="hidden" />
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1004,20 +1025,34 @@ export default function AdminDashboardPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <span className="block text-[11px] font-semibold text-purple-800 mb-1">Rendered Front View</span>
-                        <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-50/50 transition-colors text-center">
-                          <Upload className="w-4 h-4 text-purple-600 mb-1" />
-                          <span className="text-[10px] font-medium text-gray-700 truncate w-full">{renderedFrontFileName || (renderedFrontUrl ? 'Front Render Loaded' : 'Select Front Render')}</span>
-                          <input type="file" accept="image/*" onChange={handleRenderedFrontUpload} className="hidden" />
-                        </label>
+                        <div className="flex items-center gap-1.5">
+                          <label className="flex-1 flex flex-col items-center justify-center p-2.5 bg-white border border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-50/50 transition-colors text-center">
+                            <Upload className="w-4 h-4 text-purple-600 mb-1" />
+                            <span className="text-[10px] font-medium text-gray-700 truncate w-full">{renderedFrontFileName || (renderedFrontUrl ? 'Front Render Loaded' : 'Gallery / File')}</span>
+                            <input type="file" accept="image/*" onChange={handleRenderedFrontUpload} className="hidden" />
+                          </label>
+                          <label className="flex flex-col items-center justify-center p-2.5 bg-purple-100 border border-purple-300 rounded-xl cursor-pointer hover:bg-purple-200 transition-colors text-center text-purple-800" title="Take Photo with Camera">
+                            <Camera className="w-4 h-4 mb-1 text-purple-700" />
+                            <span className="text-[10px] font-bold">Camera</span>
+                            <input type="file" accept="image/*" capture="environment" onChange={handleRenderedFrontUpload} className="hidden" />
+                          </label>
+                        </div>
                       </div>
 
                       <div>
                         <span className="block text-[11px] font-semibold text-purple-800 mb-1">Rendered Back View</span>
-                        <label className="flex flex-col items-center justify-center p-3 bg-white border border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-50/50 transition-colors text-center">
-                          <Upload className="w-4 h-4 text-purple-600 mb-1" />
-                          <span className="text-[10px] font-medium text-gray-700 truncate w-full">{renderedBackFileName || (renderedBackUrl ? 'Back Render Loaded' : 'Select Back Render')}</span>
-                          <input type="file" accept="image/*" onChange={handleRenderedBackUpload} className="hidden" />
-                        </label>
+                        <div className="flex items-center gap-1.5">
+                          <label className="flex-1 flex flex-col items-center justify-center p-2.5 bg-white border border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-purple-500 hover:bg-purple-50/50 transition-colors text-center">
+                            <Upload className="w-4 h-4 text-purple-600 mb-1" />
+                            <span className="text-[10px] font-medium text-gray-700 truncate w-full">{renderedBackFileName || (renderedBackUrl ? 'Back Render Loaded' : 'Gallery / File')}</span>
+                            <input type="file" accept="image/*" onChange={handleRenderedBackUpload} className="hidden" />
+                          </label>
+                          <label className="flex flex-col items-center justify-center p-2.5 bg-purple-100 border border-purple-300 rounded-xl cursor-pointer hover:bg-purple-200 transition-colors text-center text-purple-800" title="Take Photo with Camera">
+                            <Camera className="w-4 h-4 mb-1 text-purple-700" />
+                            <span className="text-[10px] font-bold">Camera</span>
+                            <input type="file" accept="image/*" capture="environment" onChange={handleRenderedBackUpload} className="hidden" />
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
