@@ -171,11 +171,5 @@ export function generateA5ShippingLabelPDF(data: ShippingAddressData): jsPDF {
   const footerInstruction = isIntl ? 'INTERNATIONAL PARCEL • HANDLE WITH CARE • FRAGILE TEXTILE FABRIC' : 'HANDLE WITH CARE • FRAGILE TEXTILE FABRIC • SAME DAY DISPATCH'
   doc.text(footerInstruction, width / 2, 184.5, { align: 'center' })
 
-  // Footer Branding / Credit
-  doc.setFontSize(7)
-  doc.setFont('helvetica', 'normal')
-  doc.setTextColor(COLOR_MID_GRAY, COLOR_MID_GRAY, COLOR_MID_GRAY)
-  doc.text('Generated via ragasboutique.in Shipping Label Creator', width / 2, 202, { align: 'center' })
-
   return doc
 }
