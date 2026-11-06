@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     'blouse material Washermenpet',
     'designer blouse material Chennai',
     'same day dispatch blouse fabric',
+    'Aari work blouse material',
+    'hand embroidery blouse fabric',
+    'premium blouse material',
+    'bridal aari work blouse fabric',
+    'semi bridal blouse material',
   ],
   authors: [{ name: 'Ragas Boutique' }],
   creator: 'Ragas Boutique',
@@ -49,6 +54,9 @@ export const metadata: Metadata = {
     title: 'Ragas Boutique | Premium Unstitched Blouse Fabrics',
     description:
       'Shop unstitched blouse materials (Netted Tissue, Semi Silk & Tissue Fabric) with Same Day Dispatch.',
+  },
+  verification: {
+    google: 'googled461bded23794e33',
   },
   robots: {
     index: true,
