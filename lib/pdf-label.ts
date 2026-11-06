@@ -189,11 +189,11 @@ export function generateA7ShippingLabelPDF(data: ShippingAddressData): jsPDF {
 
   doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(5)
+  doc.setFontSize(6)
   const footerMsg = isIntl
-    ? '★ INTL PARCEL • HANDLE WITH CARE • TEXTILE FABRIC ★'
-    : '★ HANDLE WITH CARE • UNSTITCHED TEXTILE FABRIC ★'
-  doc.text(footerMsg, width / 2, footerY + 3.5, { align: 'center' })
+    ? 'INTL PARCEL • UNSTITCHED TEXTILE FABRIC'
+    : 'UNSTITCHED TEXTILE FABRIC'
+  doc.text(footerMsg, width / 2, footerY + 3.6, { align: 'center' })
 
   return doc
 }
