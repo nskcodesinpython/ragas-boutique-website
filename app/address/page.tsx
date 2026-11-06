@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MapPin, User, Building, Send, Download, CheckCircle2, Sparkles, Globe, Plane } from 'lucide-react'
-import { generateA5ShippingLabelPDF, ShippingAddressData, BOUTIQUE_ADDRESS } from '@/lib/pdf-label'
+import { generateA7ShippingLabelPDF, ShippingAddressData, BOUTIQUE_ADDRESS } from '@/lib/pdf-label'
 import { getWhatsAppLink } from '@/lib/whatsapp'
 
 const INDIAN_STATES = [
@@ -116,7 +116,7 @@ export default function ShippingAddressPage() {
       alert('Please fill in all required address fields.')
       return
     }
-    const doc = generateA5ShippingLabelPDF(getFormData())
+    const doc = generateA7ShippingLabelPDF(getFormData())
     const codeVal = isIntl ? postalZipCode : pincode
     const filename = `Ragas-Shipping-Label-${customerName.replace(/[^a-zA-Z0-9]/g, '-')}-${codeVal || 'intl'}.pdf`
     doc.save(filename)
@@ -143,7 +143,7 @@ export default function ShippingAddressPage() {
     setIsGenerating(true)
 
     // Automatically trigger PDF download for customer
-    const doc = generateA5ShippingLabelPDF(getFormData())
+    const doc = generateA7ShippingLabelPDF(getFormData())
     const codeVal = isIntl ? postalZipCode : pincode
     const filename = `Ragas-Shipping-Label-${customerName.replace(/[^a-zA-Z0-9]/g, '-')}-${codeVal || 'intl'}.pdf`
     doc.save(filename)
@@ -210,7 +210,7 @@ ${city.trim()}, ${isIntl ? stateProvince.trim() : state}
               Delivery Address Form
             </h1>
             <p className="text-sm text-gray-600 mt-2 max-w-xl mx-auto">
-              Please enter your full delivery address (Indian or International). Once submitted, an <strong>A5 Printable Parcel Shipping Label PDF</strong> will be created and shared directly with the shop via WhatsApp for dispatch.
+              Please enter your full delivery address (Indian or International). Once submitted, an <strong>A7 Printable Parcel Shipping Label PDF</strong> will be created and shared directly with the shop via WhatsApp for dispatch.
             </p>
           </div>
 
@@ -522,7 +522,7 @@ ${city.trim()}, ${isIntl ? stateProvince.trim() : state}
                     }`}
                   >
                     {isIntl ? <Plane className="w-4 h-4" /> : <Send className="w-4 h-4" />}
-                    <span>{isGenerating ? 'Generating A5 Label PDF...' : `Send ${isIntl ? 'International' : 'Domestic'} Address to Shop via WhatsApp`}</span>
+                    <span>{isGenerating ? 'Generating A7 Label PDF...' : `Send ${isIntl ? 'International' : 'Domestic'} Address to Shop via WhatsApp`}</span>
                   </button>
 
                   <button
@@ -531,7 +531,7 @@ ${city.trim()}, ${isIntl ? stateProvince.trim() : state}
                     className="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl text-xs font-bold uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Download className="w-4 h-4 text-gray-600" />
-                    <span>Preview / Download A5 Parcel Label PDF</span>
+                    <span>Preview / Download A7 Parcel Label PDF</span>
                   </button>
                 </div>
 
