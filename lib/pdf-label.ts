@@ -59,141 +59,194 @@ export function generateA7ShippingLabelPDF(data: ShippingAddressData): jsPDF {
   doc.setLineWidth(0.2)
   doc.rect(3.5, 3.5, width - 7, height - 7)
 
-  // --- HEADER BANNER ---
+  // --- HEADER BANNER (Compact Slim Height: 6.8mm) ---
   doc.setFillColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(3.8, 3.8, width - 7.6, 11, 'F')
+  doc.rect(3.5, 3.5, width - 7, 6.8, 'F')
 
   doc.setTextColor(255, 255, 255)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(10.5)
-  doc.text('RAGAS BOUTIQUE', width / 2, 8.8, { align: 'center' })
+  doc.setFontSize(8.5)
+  doc.text('RAGAS BOUTIQUE', width / 2, 7.3, { align: 'center' })
 
   doc.setFont('helvetica', 'normal')
-  doc.setFontSize(5)
+  doc.setFontSize(4.2)
   const headerSubtitle = isIntl
     ? 'INTERNATIONAL PRIORITY PARCEL LABEL'
     : 'PRIORITY PARCEL SHIPPING LABEL'
-  doc.text(headerSubtitle, width / 2, 12.6, { align: 'center' })
+  doc.text(headerSubtitle, width / 2, 9.6, { align: 'center' })
 
-  // --- RECIPIENT / DELIVER TO BOX ---
-  // Box bounds: x=4, y=16.5, w=66, h=51
-  const toBoxY = 16.5
-  const toBoxH = 52.5
+  // --- RECIPIENT / DELIVER TO BOX (Top Half) ---
+  // Generous equal box height: 41.5mm each
+  const toBoxY = 11.2
+  const boxHeight = 41.5
   doc.setFillColor(C_LIGHT_BG, C_LIGHT_BG, C_LIGHT_BG)
-  doc.rect(4, toBoxY, width - 8, toBoxH, 'F')
+  doc.rect(3.5, toBoxY, width - 7, boxHeight, 'F')
   doc.setLineWidth(0.4)
   doc.setDrawColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(4, toBoxY, width - 8, toBoxH, 'S')
+  doc.rect(3.5, toBoxY, width - 7, boxHeight, 'S')
 
   // "DELIVER TO" Title Tab
-  const badgeWidth = isIntl ? 34 : 26
+  const badgeWidth = isIntl ? 36 : 28
   doc.setFillColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(4, toBoxY, badgeWidth, 5.2, 'F')
+  doc.rect(3.5, toBoxY, badgeWidth, 5.2, 'F')
   doc.setTextColor(255, 255, 255)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(6.5)
-  doc.text(isIntl ? 'DELIVER TO (INTL):' : 'DELIVER TO:', 6, toBoxY + 3.8)
+  doc.setFontSize(7)
+  doc.text(isIntl ? 'DELIVER TO (INTL):' : 'DELIVER TO:', 5.5, toBoxY + 3.8)
 
   // Customer Name
   doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(9)
+  doc.setFontSize(10)
   const safeName = (data.customerName || 'VALUED CUSTOMER').trim().toUpperCase()
-  const nameLines = doc.splitTextToSize(safeName, width - 12)
-  doc.text(nameLines, 6, toBoxY + 9.5)
+  const nameLines = doc.splitTextToSize(safeName, width - 11)
+  doc.text(nameLines[0] || safeName, 5.5, toBoxY + 9.2)
 
   // Phone Number Line
-  const phoneY = toBoxY + 9.5 + nameLines.length * 3.6
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(7)
+  doc.setFontSize(7.8)
   doc.setTextColor(C_DARK, C_DARK, C_DARK)
   const altText = data.alternatePhone ? ` / ${data.alternatePhone}` : ''
   const phoneStr = `PH: ${codePrefix} ${data.phoneNumber}${altText}`
-  const phoneLines = doc.splitTextToSize(phoneStr, width - 12)
-  doc.text(phoneLines, 6, phoneY)
+  const phoneLines = doc.splitTextToSize(phoneStr, width - 11)
+  doc.text(phoneLines[0] || phoneStr, 5.5, toBoxY + 13.2)
 
-  // Address Lines
-  let addrY = phoneY + phoneLines.length * 3.2 + 0.5
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(6.5)
-  doc.setTextColor(C_DARK, C_DARK, C_DARK)
+  // Address Lines:
+  // Line 1: House No. / Flat / Building Name & Street Name
+  // Line 2: Locality / District / Landmark
+  // Line 3: City / Town, State
+  // Auto-fit loop: if there are many lines, automatically adjust font size down
+  // so the entire address comfortably fits without overlapping the bottom badge
+  const streetLine = (data.doorNoStreet || '').trim()
+  const localityLine = (data.localityLandmark || '').trim()
+  const cityStateLine = `${(data.city || '').trim()}${data.state ? `, ${(data.state || '').trim()}` : ''}`
 
-  const rawStreet = `${data.doorNoStreet || ''}${data.localityLandmark ? `, ${data.localityLandmark}` : ''}`
-  const streetLines = doc.splitTextToSize(rawStreet, width - 12)
-  // Print max 3 lines of street to keep layout neat
-  const visibleStreetLines = streetLines.slice(0, 3)
-  doc.text(visibleStreetLines, 6, addrY)
+  const startAddrY = toBoxY + 16.8
+  const maxAvailableHeight = (toBoxY + boxHeight - 9.0) - startAddrY // ~15.7mm available space
 
-  addrY += visibleStreetLines.length * 2.9
-  const cityState = `${data.city || ''}, ${data.state || ''}`.trim().replace(/^,\s*|,\s*$/g, '')
-  const cityStateLines = doc.splitTextToSize(cityState, width - 12)
-  doc.text(cityStateLines.slice(0, 2), 6, addrY)
+  let addrFontSize = 8.5
+  let lineHeight = addrFontSize * 0.42
+  let sLines: string[] = []
+  let lLines: string[] = []
+  let cLines: string[] = []
+
+  // Try font sizes from 8.5 down to 5.5 to guarantee all lines fit inside available height
+  while (addrFontSize >= 5.5) {
+    doc.setFontSize(addrFontSize)
+    lineHeight = addrFontSize * 0.40
+    sLines = streetLine ? doc.splitTextToSize(streetLine, width - 11) : []
+    lLines = localityLine ? doc.splitTextToSize(localityLine, width - 11) : []
+    cLines = cityStateLine ? doc.splitTextToSize(cityStateLine, width - 11) : []
+
+    const totalHeight = (sLines.length + lLines.length + cLines.length) * lineHeight
+    if (totalHeight <= maxAvailableHeight || addrFontSize <= 5.5) {
+      break
+    }
+    addrFontSize -= 0.5
+  }
+
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(addrFontSize)
+  doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
+
+  let currentAddrY = startAddrY
+  if (sLines.length > 0) {
+    doc.text(sLines, 5.5, currentAddrY)
+    currentAddrY += sLines.length * lineHeight
+  }
+
+  if (lLines.length > 0) {
+    doc.text(lLines, 5.5, currentAddrY)
+    currentAddrY += lLines.length * lineHeight
+  }
+
+  if (cLines.length > 0) {
+    doc.text(cLines, 5.5, currentAddrY)
+  }
 
   // High-Contrast Postal / Destination Badge inside TO Box
-  const codeBoxY = toBoxY + toBoxH - 10.2
+  const codeBoxY = toBoxY + boxHeight - 8.5
   doc.setFillColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(5.5, codeBoxY, width - 11, 8.6, 'F')
+  doc.rect(4.5, codeBoxY, width - 9, 7.5, 'F')
 
   doc.setTextColor(255, 255, 255)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(7.5)
-  const zipText = isIntl ? `POSTAL: ${data.pincode}` : `PIN: ${data.pincode}`
-  doc.text(zipText, 7.5, codeBoxY + 4)
+  doc.setFontSize(8.5)
+  const zipText = isIntl ? `POSTAL: ${data.pincode}` : `PINCODE: ${data.pincode}`
+  doc.text(zipText, 6.5, codeBoxY + 3.8)
 
-  doc.setFontSize(6)
+  doc.setFontSize(6.5)
   doc.setFont('helvetica', 'normal')
-  doc.text(`DEST: ${countryName}`, 7.5, codeBoxY + 7.2)
+  doc.text(`DEST: ${countryName}`, 6.5, codeBoxY + 6.6)
 
-  // --- SENDER / FROM ADDRESS SECTION ---
-  // Box bounds: x=4, y=70.5, w=66, h=25
-  const fromBoxY = 70.2
-  const fromBoxH = 24.2
+  // --- SENDER / FROM ADDRESS SECTION (Bottom Half - Equally Sized 41.5mm) ---
+  const fromBoxY = toBoxY + boxHeight + 1.5 // 54.2
   doc.setFillColor(255, 255, 255)
-  doc.rect(4, fromBoxY, width - 8, fromBoxH, 'F')
-  doc.setLineWidth(0.35)
+  doc.rect(3.5, fromBoxY, width - 7, boxHeight, 'F')
+  doc.setLineWidth(0.4)
   doc.setDrawColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(4, fromBoxY, width - 8, fromBoxH, 'S')
+  doc.rect(3.5, fromBoxY, width - 7, boxHeight, 'S')
 
   // "FROM / SENDER" Title Tab
   doc.setFillColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(4, fromBoxY, 23, 4.4, 'F')
+  doc.rect(3.5, fromBoxY, 26, 5.2, 'F')
   doc.setTextColor(255, 255, 255)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(5.8)
-  doc.text('FROM / SENDER:', 5.5, fromBoxY + 3.2)
-
-  // Sender Details
-  doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.setFont('helvetica', 'bold')
   doc.setFontSize(7)
-  doc.text(BOUTIQUE_ADDRESS.name, 6, fromBoxY + 8)
+  doc.text('FROM / SENDER:', 5.5, fromBoxY + 3.8)
 
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(5.5)
-  doc.setTextColor(C_DARK, C_DARK, C_DARK)
-  doc.text(`${BOUTIQUE_ADDRESS.line1}, ${BOUTIQUE_ADDRESS.line2}`, 6, fromBoxY + 11.8)
-  doc.text(`${BOUTIQUE_ADDRESS.cityStatePincode}, ${BOUTIQUE_ADDRESS.country}`, 6, fromBoxY + 15)
-
-  doc.setFont('helvetica', 'bold')
+  // Sender Boutique Name
   doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.setFontSize(5.8)
-  doc.text(`Ph / WA: ${BOUTIQUE_ADDRESS.phone}`, 6, fromBoxY + 19)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(10.5)
+  doc.text(BOUTIQUE_ADDRESS.name, 5.5, fromBoxY + 9.5)
+
+  // Sender Phone Number Line
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(8.2)
+  doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
+  doc.text(`Phone / WhatsApp: ${BOUTIQUE_ADDRESS.phone}`, 5.5, fromBoxY + 14)
+
+  // Separate Sender Address Lines with matching enlarged font size (9pt):
+  // Line 1: Street / Building
+  // Line 2: Locality / Area
+  // Line 3: City, State - Pincode, Country
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(9)
+  doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
+  doc.text(BOUTIQUE_ADDRESS.line1, 5.5, fromBoxY + 18.5)
+  doc.text(BOUTIQUE_ADDRESS.line2, 5.5, fromBoxY + 22.5)
+  doc.text(BOUTIQUE_ADDRESS.cityStatePincode, 5.5, fromBoxY + 26.5)
+
+  // Sender Origin Badge (Matching design with TO destination badge)
+  const fromCodeBoxY = fromBoxY + boxHeight - 8.5
+  doc.setFillColor(C_BLACK, C_BLACK, C_BLACK)
+  doc.rect(4.5, fromCodeBoxY, width - 9, 7.5, 'F')
+
+  doc.setTextColor(255, 255, 255)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(8.5)
+  doc.text('PINCODE: 600021', 6.5, fromCodeBoxY + 3.8)
+
+  doc.setFontSize(6.5)
+  doc.setFont('helvetica', 'normal')
+  doc.text('ORIGIN: CHENNAI, TAMIL NADU (INDIA)', 6.5, fromCodeBoxY + 6.6)
 
   // --- FOOTER STRIP ---
-  const footerY = 95.8
+  const footerY = fromBoxY + boxHeight + 1.2 // 96.9
   doc.setFillColor(C_LIGHT_BG, C_LIGHT_BG, C_LIGHT_BG)
-  doc.rect(4, footerY, width - 8, 5.4, 'F')
+  doc.rect(3.5, footerY, width - 7, 4.6, 'F')
   doc.setLineWidth(0.2)
   doc.setDrawColor(C_BLACK, C_BLACK, C_BLACK)
-  doc.rect(4, footerY, width - 8, 5.4, 'S')
+  doc.rect(3.5, footerY, width - 7, 4.6, 'S')
 
   doc.setTextColor(C_BLACK, C_BLACK, C_BLACK)
   doc.setFont('helvetica', 'bold')
-  doc.setFontSize(6)
+  doc.setFontSize(5.8)
   const footerMsg = isIntl
     ? 'INTL PARCEL • UNSTITCHED TEXTILE FABRIC'
     : 'UNSTITCHED TEXTILE FABRIC'
-  doc.text(footerMsg, width / 2, footerY + 3.6, { align: 'center' })
+  doc.text(footerMsg, width / 2, footerY + 3.2, { align: 'center' })
 
   return doc
 }
