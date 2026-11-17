@@ -7,25 +7,48 @@ import { MapPin, User, Building, Send, Download, CheckCircle2, Sparkles, Globe, 
 import { generateA7ShippingLabelPDF, ShippingAddressData, BOUTIQUE_ADDRESS } from '@/lib/pdf-label'
 import { getWhatsAppLink } from '@/lib/whatsapp'
 
-const INDIAN_STATES = [
-  'Tamil Nadu',
+const INDIAN_STATES_AND_UTS = [
+  // 28 States (Alphabetical)
   'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jharkhand',
   'Karnataka',
   'Kerala',
-  'Telangana',
-  'Maharashtra',
-  'Puducherry',
-  'Gujarat',
-  'Delhi',
-  'West Bengal',
-  'Rajasthan',
-  'Uttar Pradesh',
   'Madhya Pradesh',
-  'Bihar',
-  'Punjab',
-  'Haryana',
-  'Assam',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
   'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+
+  // 8 Union Territories (Alphabetical)
+  'Andaman and Nicobar Islands',
+  'Chandigarh',
+  'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi',
+  'Jammu and Kashmir',
+  'Ladakh',
+  'Lakshadweep',
+  'Puducherry',
+
+  // Fallback
   'Other State / Union Territory'
 ]
 
@@ -477,7 +500,7 @@ ${city.trim()}, ${isIntl ? stateProvince.trim() : state}
                             onChange={(e) => setState(e.target.value)}
                             className="w-full px-3 py-3 rounded-xl border border-gray-200 text-sm bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary"
                           >
-                            {INDIAN_STATES.map((st) => (
+                            {INDIAN_STATES_AND_UTS.map((st) => (
                               <option key={st} value={st}>{st}</option>
                             ))}
                           </select>
